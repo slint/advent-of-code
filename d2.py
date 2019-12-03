@@ -1,34 +1,28 @@
-"""Day 2: Inventory Management System
-
-https://adventofcode.com/2018/day/2
-"""
-
 from pathlib import Path
-from collections import Counter
-from functools import reduce
-import operator
+from itertools import product
+
+INSTRUCTIONS = tuple(map(int, Path('input.txt').read_text().split(',')))
+MAGIC = 19690720
+
+def run_program(noun, verb):
+    memory = list(INSTRUCTIONS)
+    memory[1] = noun
+    memory[2] = verb
+    pos = 0
+    while True:
+        opcode = memory[pos]
+        if opcode == 1:
+            l_pos, r_pos, o_pos = memory[pos + 1: pos + 4]
+            memory[o_pos] = memory[l_pos] + memory[r_pos]
+        elif opcode == 2:
+            l_pos, r_pos, o_pos = memory[pos + 1: pos + 4]
+            memory[o_pos] = memory[l_pos] * memory[r_pos]
+        elif opcode == 99:
+            break
+        pos += 4
+    return memory[0]
 
 
-INPUT = Path('input.txt').read_text().splitlines()
-
-
-def prod(it):
-    return reduce(operator.mul, it, 1)
-
-
-if __name__ == "__main__":
-
-    # Look ma' I can write FP nonsense now!
-    res = prod(reduce(
-        lambda s, c: (s[0] + (2 in c), s[1] + (3 in c)),
-        map(lambda c: c.values(), map(Counter, INPUT)),
-        (0, 0)
-    ))
-    print(f'Answer 1: {res}')
-
-    pos_let = list(map(set, map(enumerate, INPUT)))
-    for idx_i, i in enumerate(pos_let):
-        for j in pos_let[idx_i:]:
-            if len(i - j) == 1:
-                word = ''.join(x for _, x in sorted(i & j))
-                print(f'Answer 2: {word}')
+for noun, verb in product(range(100), range(100)):
+    if run_program(noun, verb) == MAGIC:
+        print(noun, verb, 100 * noun + verb)

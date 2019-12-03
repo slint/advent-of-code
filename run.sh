@@ -12,4 +12,4 @@ if [ ! -f input.txt ]; then
     exit 2
 fi
 
-python3.6 "d${day}.py"
+python3.8 "d${day}.py"
