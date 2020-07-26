@@ -1,50 +1,48 @@
-"""Day 3: No Matter How You Slice It
-
-https://adventofcode.com/2018/day/3
-"""
-
 from pathlib import Path
-from collections import namedtuple, defaultdict
-from itertools import product
+from collections import defaultdict
 
-Claim = namedtuple('Claim', ('id', 'pos', 'size'))
+w1_instructions, w2_instructions = map(
+    lambda l: l.split(','),
+    Path('input.txt').read_text().splitlines()
+)
+
+OPS = {
+    'R': lambda x, y: (x + 1, y),
+    'L': lambda x, y: (x - 1, y),
+    'U': lambda x, y: (x, y + 1),
+    'D': lambda x, y: (x, y - 1),
+}
+
+def traverse_points(instructions):
+    visited_points = set()
+    x = y = 0
+    for i in instructions:
+        direction = i[0]
+        distance = int(i[1:])
+        for _ in range(distance):
+            x, y = OPS[direction](x, y)
+            yield x ,y
+
+w1_locations = defaultdict(list)
+w2_locations = defaultdict(list)
+
+w1_steps = w2_steps = 0
+min_steps = float('inf')
+for w1_loc, w2_loc in zip(traverse_points(w1_instructions), traverse_points(w2_instructions)):
+    w1_steps += 1
+    w2_steps += 1
+    w1_locations[w1_loc].append(w1_steps)
+    w2_locations[w2_loc].append(w2_steps)
+
+    if w1_loc in w2_locations:
+        w2_cross_steps = w2_locations[w1_loc][0]
+        min_steps = min(min_steps, w2_cross_steps + w1_steps)
+    if w2_loc in w1_locations:
+        w1_cross_steps = w1_locations[w2_loc][0]
+        min_steps = min(min_steps, w1_cross_steps + w2_steps)
 
 
-INPUT = Path('input.txt').read_text().splitlines()
+print (min_steps)
+crossing_points = w1_locations.keys() & w2_locations.keys()
 
-
-def blank_fabric(size=1000):
-    return defaultdict(lambda: [0, set()])
-    return dict.fromkeys(product(range(1, size + 1), range(1, size + 1)), 0)
-
-
-def parse_claim(c):
-    id, _, pos, size = c.split()
-    return Claim(
-        id[1:],
-        tuple(map(int, pos[:-1].split(','))),
-        tuple(map(int, size.split('x')))
-    )
-
-
-def apply_claim(fabric, c: Claim):
-    overlapped = set()
-    for x in range(c.size[0]):
-        for y in range(c.size[1]):
-            pos = c.pos[0] + 1 + x, c.pos[1] + 1 + y
-            fabric[pos][0] += 1
-            fabric[pos][1].add(c.id)
-            overlapped |= fabric[pos][1]
-    return overlapped if len(overlapped) > 1 else set()
-
-
-if __name__ == "__main__":
-    claims = [parse_claim(c) for c in INPUT]
-    fabric = blank_fabric()
-
-    non_overlapping_claim_ids = {c.id for c in claims}
-    for c in claims:
-        non_overlapping_claim_ids -= apply_claim(fabric, c)
-    overlapped = sum(1 for _ in (filter(lambda v: v[0] >= 2, fabric.values())))
-    print(overlapped)
-    print(non_overlapping_claim_ids)
+print(min(abs(x) + abs(y) for x, y in crossing_points))

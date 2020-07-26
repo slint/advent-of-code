@@ -8,6 +8,7 @@ total = 0
 for l in lines:
     f = 0
     t = l
+    # f = floor(t / 3) - 2
     while t > 6:
         t = int(t / 3) - 2
         f += t
