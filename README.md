@@ -1,14 +1,16 @@
-# Advent of Code 2019 Solutions
+# Advent of Code 2020 Solutions
 
-Python 3.8 solutions for the [Advent of Code 2019 Calendar](http://adventofcode.com/2019).
+Rust solutions for the [Advent of Code 2020 Calendar](https://adventofcode.com/2020).
 
-**Personal leaderboard code**: `197364-6c22136b` (join [here](https://adventofcode.com/2019/leaderboard/private))
+To run the solutions:
 
-To run the problems:
+```shell
+# to run day 2
+cargo run 2 /path/to/input.txt
 
-```console
-# place input.txt in the same folder
+# if you skip the 2nd argument it will use the "input.txt" from your folder
+cargo run 2
 
-# run for the specific day
-./run.sh 1
+# if you skip the day it will run the last available day
+cargo run
 ```
