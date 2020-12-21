@@ -3,18 +3,18 @@ use std::path::Path;
 
 mod solutions;
 
-static LAST_DAY: u8 = 1;
-
 fn parse_args() -> Result<(u8, String), Box<dyn Error>> {
     let mut args = std::env::args();
+    // Skip first
+    args.next();
 
     // Parse day
     let day = match args.next() {
         Some(day_or_input_path) => match day_or_input_path.parse::<u8>() {
             Ok(day_input) => day_input,
-            Err(_) => LAST_DAY,
+            Err(_) => 0,
         },
-        None => LAST_DAY,
+        None => 0,
     };
 
     // Parse input path
@@ -36,5 +36,9 @@ fn main() {
     let (day, input) = parse_args().unwrap();
     println!("Running day {}...", day);
     let solutions = solutions::get_solutions();
-    solutions.get(&day).expect("No solution for this day")(input);
+    let last_day = solutions.keys().max().unwrap();
+    match day {
+        0 => solutions.get(&last_day).expect("No solution for this day")(input),
+        _ => solutions.get(&day).expect("No solution for this day")(input),
+    }
 }
