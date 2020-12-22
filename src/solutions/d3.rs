@@ -22,10 +22,10 @@ fn parse_tree_map(data: String) -> SlopeMap {
     map
 }
 
-fn descent_map(map: &SlopeMap) -> u32 {
+fn descent_map(map: &SlopeMap, x_add: usize, y_add: usize) -> u32 {
     let mut trees_count = 0;
-    let mut x_pos = 0;
-    let mut y_pos = 0;
+    let mut x_pos: usize = 0;
+    let mut y_pos: usize = 0;
     let map_width = map[0].len();
     let map_height = map.len();
 
@@ -36,8 +36,8 @@ fn descent_map(map: &SlopeMap) -> u32 {
             Space::Tree => trees_count += 1,
             _ => (),
         }
-        x_pos += 3;
-        y_pos += 1;
+        x_pos += x_add;
+        y_pos += y_add;
         if y_pos >= map_height {
             break;
         }
@@ -47,6 +47,11 @@ fn descent_map(map: &SlopeMap) -> u32 {
 
 pub fn run(input: String) {
     let map = parse_tree_map(input);
-    let tress = descent_map(&map);
-    println!("The path has {} trees.", tress);
+    let pairs: Vec<(usize, usize)> = vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
+
+    let res: u64 = pairs
+        .iter()
+        .map(|(x, y)| descent_map(&map, *x, *y) as u64)
+        .product();
+    println!("The product of all slope trees is {}.", res);
 }
