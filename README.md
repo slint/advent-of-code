@@ -1,6 +1,6 @@
-# Advent of Code 2020 Solutions
+# Advent of Code 2021 Solutions
 
-Rust solutions for the [Advent of Code 2020 Calendar](https://adventofcode.com/2020).
+Rust solutions for the [Advent of Code 2021 Calendar](https://adventofcode.com/2021).
 
 To run the solutions:
 
