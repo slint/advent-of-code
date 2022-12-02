@@ -5,3 +5,4 @@ authors = ["Alexander Ioannidis <a.ioannidis@cern.ch>"]
 edition = "2021"
 
 [dependencies]
+itertools = "0.10.2"
