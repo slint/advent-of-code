@@ -15,4 +15,5 @@ if __name__ == "__main__":
     else:
         day_module = f"day{day_num}"
 
+    print(f"Running {day_module}")
     importlib.import_module(f"solutions.{day_module}").run(input_data)
