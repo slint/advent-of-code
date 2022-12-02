@@ -17,8 +17,8 @@ To run the a solution for a day:
 
 ### Archive
 
-- (2017 solutions)[/tree/2017] 🐍
-- (2018 solutions)[/tree/2018] 🐍
-- (2019 solutions)[/tree/2019] 🐍
-- (2020 solutions)[/tree/2020] 🦀
-- (2021 solutions)[/tree/2021] 🦀
+- [2017 solutions](/tree/2017) 🐍
+- [2018 solutions](/tree/2018) 🐍
+- [2019 solutions](/tree/2019) 🐍
+- [2020 solutions](/tree/2020) 🦀
+- [2021 solutions](/tree/2021) 🦀
