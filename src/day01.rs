@@ -1,5 +1,5 @@
-use std::fs;
 use std::env;
+use std::fs;
 
 fn main() {
     let val = env::args().last().unwrap();

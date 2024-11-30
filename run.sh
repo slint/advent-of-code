@@ -1,20 +1,11 @@
 #!/bin/bash
 
-day=${1}
-lang=${2}
-input_file=${3:-inputs/day${1}.txt}
+# First arg or current day
+day=${1:-$(date +%-d)}
+# Zero-pad day
+day=$(printf "%02d" ${day})
 
-# Rust
-echo "# Rust"
-[[ $lang == "rust" ]] && cargo run --manifest-path "rust/Cargo.toml" --bin "day${day}" -- "${input_file}"
-echo
+# Input file is the 2nd arg or inputs/dayXX.txt
+input_file=${2:-inputs/day${day}.txt}
 
-# JavaScript
-echo "# JavaScript"
-[[ $lang == "js" ]] && node "js/day${day}.js" "${input_file}"
-echo
-
-# Python
-echo "# Python"
-[[ $lang == "py" ]] && env python "python/day${day}.py" "${input_file}"
-echo
+cargo run --bin "day${day}" -- "${input_file}"

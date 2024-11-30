@@ -1,14 +1,14 @@
-# Advent of Code 2023 Solutions
+# Advent of Code 2024 Solutions 🦀
 
-Rust/JavaScript/Python solutions for the [Advent of Code 2023 Calendar](https://adventofcode.com/2023).
+Rust solutions for the [Advent of Code 2024 Calendar](https://adventofcode.com/2024).
 
 To run the a solution for a day:
 
 ```shell
-# to run day 2 (with `./input.txt`)
-./run.sh 2
+# to run day 2 with `./input.txt`
+./run.sh 2 input.txt
 
-# if you skip the day it will run the last available day
+# without args, runs the current day with `./inputs/dayXX.txt`
 ./run.sh
 ```
 
@@ -20,3 +20,4 @@ To run the a solution for a day:
 - [2020 solutions](https://github.com/slint/advent-of-code/tree/2020) 🦀
 - [2021 solutions](https://github.com/slint/advent-of-code/tree/2021) 🦀
 - [2022 solutions](https://github.com/slint/advent-of-code/tree/2022) 🐍
+- [2023 solutions](https://github.com/slint/advent-of-code/tree/2023) 🐍/🦀
