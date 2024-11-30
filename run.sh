@@ -4,7 +4,7 @@ day=${1}
 lang=${2}
 input_file=${3:-inputs/day${1}.txt}
 
-# Rust 
+# Rust
 echo "# Rust"
 [[ $lang == "rust" ]] && cargo run --manifest-path "rust/Cargo.toml" --bin "day${day}" -- "${input_file}"
 echo
