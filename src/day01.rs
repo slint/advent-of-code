@@ -28,9 +28,9 @@ fn main() {
     part_two(&left_list, &right_list);
 }
 
-fn part_one(left_list: &Vec<u32>, right_list: &Vec<u32>) {
-    let mut left_list = left_list.clone();
-    let mut right_list = right_list.clone();
+fn part_one(left_list: &[u32], right_list: &[u32]) {
+    let mut left_list = left_list.to_owned();
+    let mut right_list = right_list.to_owned();
     left_list.sort();
     right_list.sort();
 
@@ -45,7 +45,7 @@ fn part_one(left_list: &Vec<u32>, right_list: &Vec<u32>) {
     println!("Sum of differences: {}", sum_of_diffs);
 }
 
-fn part_two(left_list: &Vec<u32>, right_list: &Vec<u32>) {
+fn part_two(left_list: &[u32], right_list: &[u32]) {
     let mut sum_of_similar = 0;
     for left in left_list.iter() {
         let total_similar = right_list.iter().filter(|x| *x == left).count() as u32;

@@ -81,7 +81,7 @@ fn read_nums(chars: &mut Chars<'_>) -> Result<Option<(i32, i32)>, &'static str> 
 
     loop {
         match chars.next() {
-            Some(c) if c.is_digit(10) => {
+            Some(c) if c.is_ascii_digit() => {
                 if reading_y {
                     y.push(c);
                 } else {

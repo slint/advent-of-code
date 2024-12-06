@@ -15,7 +15,6 @@ fn part_two(data: &str) {
     for line in data.lines().filter(|x| !x.is_empty()) {
         let report: Vec<i32> = line
             .split_whitespace()
-            .into_iter()
             .map(|x| x.parse::<i32>().unwrap())
             .collect();
 
@@ -41,7 +40,6 @@ fn part_one(data: &str) {
     for line in data.lines().filter(|x| !x.is_empty()) {
         let report: Vec<i32> = line
             .split_whitespace()
-            .into_iter()
             .map(|x| x.parse::<i32>().unwrap())
             .collect();
 
@@ -52,16 +50,16 @@ fn part_one(data: &str) {
     println!("Safe reports: {safe_report_count}");
 }
 
-fn is_safe_report(report: &Vec<i32>) -> bool {
+fn is_safe_report(report: &[i32]) -> bool {
     // Check for increase or decrease within 1-3
-    let bad_diff = report.windows(2).into_iter().any(|x| {
+    let bad_diff = report.windows(2).any(|x| {
         let diff = x[0].abs_diff(x[1]);
-        !(diff >= 1 && diff <= 3)
+        !(1..=3).contains(&diff)
     });
 
     let is_sorted = report
         .windows(3)
         .all(|x| (x[0] <= x[1] && x[1] <= x[2]) || (x[0] >= x[1] && x[1] >= x[2]));
 
-    return is_sorted && !bad_diff;
+    is_sorted && !bad_diff
 }
