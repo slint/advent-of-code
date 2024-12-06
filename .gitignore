@@ -1,5 +1,6 @@
-# input file
+# input files
 input.txt
+inputs/
 
 # Python
 *.pyc
