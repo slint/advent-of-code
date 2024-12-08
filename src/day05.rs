@@ -42,7 +42,7 @@ fn main() {
         if out_of_order_pages.is_empty() {
             valid_series_middle_page_sum += pages[pages.len() / 2].parse::<u32>().unwrap();
         } else {
-            let pages = correct_page_order(pages, out_of_order_pages, &comes_before, &comes_after);
+            let pages = fix_page_order(pages, out_of_order_pages, &comes_before, &comes_after);
             incorrect_series_middle_page_sum += pages[pages.len() / 2].parse::<u32>().unwrap();
         }
     }
@@ -58,7 +58,7 @@ fn main() {
     );
 }
 
-fn correct_page_order(
+fn fix_page_order(
     pages: Vec<String>,
     mut out_of_order_pages: Vec<String>,
     comes_before: &HashMap<&str, Vec<&str>>,
@@ -92,7 +92,7 @@ fn correct_page_order(
 }
 
 fn get_out_of_order_pages(
-    pages: &Vec<String>,
+    pages: &[String],
     comes_before: &HashMap<&str, Vec<&str>>,
     comes_after: &HashMap<&str, Vec<&str>>,
 ) -> Vec<String> {
