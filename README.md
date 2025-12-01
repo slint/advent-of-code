@@ -1,6 +1,6 @@
-# Advent of Code 2024 Solutions 🦀
+# Advent of Code 2025 Solutions 🥟
 
-Rust solutions for the [Advent of Code 2024 Calendar](https://adventofcode.com/2024).
+JS/Bun solutions for the [Advent of Code 2025 Calendar](https://adventofcode.com/2025).
 
 To run the a solution for a day:
 
@@ -21,3 +21,4 @@ To run the a solution for a day:
 - [2021 solutions](https://github.com/slint/advent-of-code/tree/2021) 🦀
 - [2022 solutions](https://github.com/slint/advent-of-code/tree/2022) 🐍
 - [2023 solutions](https://github.com/slint/advent-of-code/tree/2023) 🐍/🦀
+- [2024 solutions](https://github.com/slint/advent-of-code/tree/2024) 🦀
