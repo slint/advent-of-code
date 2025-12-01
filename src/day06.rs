@@ -1,6 +1,7 @@
 mod grid;
 use std::collections::HashSet;
 use std::env;
+use std::fmt::Display;
 use std::fs;
 
 use grid::{Dir, Grid, Point};
@@ -11,6 +12,20 @@ enum Tile {
     #[default]
     Empty,
     Visited,
+}
+
+impl Display for Tile {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Tile::Box => "#".to_string(),
+                Tile::Empty => ".".to_string(),
+                Tile::Visited => "^".to_string(),
+            }
+        )
+    }
 }
 
 fn main() {

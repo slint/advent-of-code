@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::{self, Display};
 use std::ops::{Index, IndexMut};
 
 #[derive(Debug, Copy, Clone, Hash, Eq, PartialEq)]
@@ -14,6 +15,27 @@ pub enum Dir {
 }
 
 pub type Point = (usize, usize);
+
+pub struct ColorChar {
+    pub color: Option<u8>,
+    pub underline: bool,
+    pub char: char,
+}
+
+impl Display for ColorChar {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let mut s = String::new();
+        if let Some(color) = self.color {
+            s.push_str(&format!("\x1b[38;5;{}m", color));
+        }
+        if self.underline {
+            s.push_str("\x1b[4m");
+        }
+        s.push(self.char);
+        s.push_str("\x1b[0m");
+        write!(f, "{}", s)
+    }
+}
 
 #[derive(Debug)]
 pub struct Cell<T> {
@@ -31,14 +53,14 @@ impl<T> Cell<T> {
 #[derive(Debug, Default)]
 pub struct Grid<T>
 where
-    T: Clone + Default + PartialEq + Eq,
+    T: Clone + Default + PartialEq + Eq + Display,
 {
     pub data: Vec<Vec<Cell<T>>>,
 }
 
 impl<T> Grid<T>
 where
-    T: Clone + Default + PartialEq + Eq,
+    T: Clone + Default + PartialEq + Eq + Display,
 {
     pub fn new(height: usize, width: usize) -> Self {
         let mut data = Vec::with_capacity(height);
@@ -132,9 +154,24 @@ where
     }
 }
 
+impl<T> Display for Grid<T>
+where
+    T: Clone + Default + PartialEq + Eq + Display,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        for row in &self.data {
+            for cell in row {
+                write!(f, " {} ", cell.value)?;
+            }
+            writeln!(f)?;
+        }
+        Ok(())
+    }
+}
+
 impl<T> Index<Point> for Grid<T>
 where
-    T: Clone + Default + PartialEq + Eq,
+    T: Clone + Default + PartialEq + Eq + Display,
 {
     type Output = Cell<T>;
 
@@ -145,7 +182,7 @@ where
 
 impl<T> IndexMut<Point> for Grid<T>
 where
-    T: Clone + Default + PartialEq + Eq,
+    T: Clone + Default + PartialEq + Eq + Display,
 {
     fn index_mut(&mut self, index: Point) -> &mut Self::Output {
         &mut self.data[index.1][index.0]
@@ -154,7 +191,7 @@ where
 
 impl<T> Clone for Grid<T>
 where
-    T: Clone + Default + PartialEq + Eq,
+    T: Clone + Default + PartialEq + Eq + Display,
 {
     fn clone(&self) -> Self {
         let mut data = Vec::with_capacity(self.data.len());
