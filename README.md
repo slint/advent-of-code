@@ -1,6 +1,6 @@
 # Advent of Code 2025 Solutions 🥟
 
-JS/Bun solutions for the [Advent of Code 2025 Calendar](https://adventofcode.com/2025).
+TypeScript/Bun solutions for the [Advent of Code 2025 Calendar](https://adventofcode.com/2025).
 
 To run the a solution for a day:
 
