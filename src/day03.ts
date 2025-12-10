@@ -9,6 +9,7 @@ function partOne(input: string) {
   const allJoltages: number[] = [];
   for (const bankStr of input.split("\n")) {
     const bankNums = Array.from(bankStr).map(Number);
+
     let leftMax = bankNums[0];
     let leftMaxIdx = 0;
 
@@ -28,13 +29,12 @@ function partOne(input: string) {
       }
     });
 
-    let joltage = Number(leftMax.toString() + rightMax.toString());
+    const joltage = Number(leftMax.toString() + rightMax.toString());
     allJoltages.push(joltage);
   }
 
-  console.log(allJoltages);
-  console.log(allJoltages.reduce((a, i) => a + i));
-  console.log("");
+  const joltageSum = allJoltages.reduce((a, i) => a + i);
+  console.log(`Total joltage sum: ${joltageSum}`);
 }
 
 function partTwo(input: string) {
@@ -42,13 +42,22 @@ function partTwo(input: string) {
   const allJoltages: number[] = [];
   for (const bankStr of input.split("\n")) {
     const bankNums = Array.from(bankStr).map(Number);
+    const joltageDigits: string[] = [];
+    let idx: number = 0;
+
+    while (joltageDigits.length < 12 && idx < bankNums.length) {
+      const bankSlice = bankNums
+        .slice(idx, bankNums.length - (11 - joltageDigits.length))
+        .sort((a, b) => b - a);
+      joltageDigits.push(bankSlice[0].toString());
+      idx = bankNums.indexOf(bankSlice[0], idx) + 1;
+    }
+
+    allJoltages.push(Number(joltageDigits.join("")));
   }
 
-  console.log(allJoltages);
-  console.log(allJoltages.reduce((a, i) => a + i));
-  console.log("");
-
-  return input;
+  const joltageSum = allJoltages.reduce((a, i) => a + i);
+  console.log(`Total joltage sum (out of 12): ${joltageSum}`);
 }
 
 partOne(input);
