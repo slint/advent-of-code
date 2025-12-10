@@ -3,22 +3,19 @@ import Bun from "bun";
 const input_file = process.argv[2];
 
 const input = (await Bun.file(input_file).text()).trim();
-console.log(`Input: ${input}`);
 
 function partOne(input: string) {
-  console.log("Part one");
   let grid: string[][] = [];
-  let accessibleCells = 0;
-
   for (const row of input.trim().split("\n")) {
     grid.push(row.split(""));
   }
 
-  // Make a copy of the grid
-  const gridCopy = grid.map((row) => [...row]);
+  const accessibleCells = getAccessibleCells(grid);
+  console.log(`[Part one] Accessible cells: ${accessibleCells.length}`);
+}
 
-  console.log("Grid:");
-
+function getAccessibleCells(grid: string[][]): Array<[number, number]> {
+  const ret: Array<[number, number]> = [];
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
       if (grid[y][x] !== "@") {
@@ -43,18 +40,36 @@ function partOne(input: string) {
         }
       }
       if (count < 4) {
-        accessibleCells++;
-        gridCopy[y][x] = "x";
+        ret.push([y, x]);
       }
     }
   }
 
-  console.log(`Accessible cells: ${accessibleCells}`);
+  return ret;
 }
 
 function partTwo(input: string) {
-  return input;
+  let grid: string[][] = [];
+  for (const row of input.trim().split("\n")) {
+    grid.push(row.split(""));
+  }
+
+  let accessibleCellsCount = 0;
+  let accessibleCells: Array<[number, number]> = [];
+
+  do {
+    accessibleCells = getAccessibleCells(grid);
+    // add to count
+    accessibleCellsCount += accessibleCells.length;
+
+    // mark collected cells
+    for (const [y, x] of accessibleCells) {
+      grid[y][x] = ".";
+    }
+  } while (accessibleCells.length > 0);
+
+  console.log(`[Part two] Accessible cells: ${accessibleCellsCount}`);
 }
 
 partOne(input);
-// partTwo(input);
+partTwo(input);
